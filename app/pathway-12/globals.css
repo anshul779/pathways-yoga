@@ -97,8 +97,8 @@ a{color:inherit;}
 main{ padding-top:64px !important; }
 
 @media (max-width: 640px){
-  .progress-header{ top:24px !important; }
-  main{ padding-top:88px !important; }
+  .progress-header{ top:52px !important; }
+  main{ padding-top:116px !important; }
 }
 
 /* ===== Hero ===== */
