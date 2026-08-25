@@ -1,0 +1,708 @@
+@import "tailwindcss";
+
+/* ==========================================================================
+   MantraCare - 16 Benefits of Yoga Redesign
+   Premium, Clean, Modern, and Wellness-Focused Style System
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   1. Design Tokens & Core Variables
+   -------------------------------------------------------------------------- */
+:root {
+  /* Colors */
+  --bg-page: #FAFBFD;
+  --bg-card: #FFFFFF;
+  --bg-hero: #F4F7F5; /* Soft, warm green-tinted neutral */
+  --bg-highlight: #EDF7F1; /* Soft green for highlighted text/conclusion */
+  --bg-btn-back: #FFFFFF;
+  
+  --color-navy: #181E36;      /* Deep primary text/headings */
+  --color-navy-light: #333B54;/* Secondary text */
+  --color-green: #238647;     /* MantraCare signature green */
+  --color-green-light: #EBF7EE;
+  --color-blue: #2B6CB0;      /* Subtle blue accent for research links */
+  --color-blue-hover: #1A365D;
+  --color-body: #4A5468;      /* Readable dark slate body text */
+  --border-light: #E2E8F0;    /* Light borders */
+  --border-green: #C6ECCF;
+  
+  /* Typography */
+  --font-family: var(--font-plus-jakarta), -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  
+  /* Shadow & Transitions */
+  --shadow-btn: 0 4px 12px rgba(24, 30, 54, 0.05);
+  --shadow-nav: 0 8px 30px rgba(24, 30, 54, 0.06);
+  --transition-smooth: 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-fast: 0.15s ease;
+}
+
+/* --------------------------------------------------------------------------
+   2. Reset & Core Layout
+   -------------------------------------------------------------------------- */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-size: 16px;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: var(--font-family);
+  background-color: var(--bg-page);
+  color: var(--color-body);
+  min-height: 100vh;
+  line-height: 1.7;
+}
+
+/* --------------------------------------------------------------------------
+   3. Reading Progress Indicator
+   -------------------------------------------------------------------------- */
+.ReadingProgress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 4px;
+  width: 0%;
+  background-color: var(--color-green);
+  z-index: 1000;
+  transition: width 0.1s ease-out;
+}
+
+/* --------------------------------------------------------------------------
+   4. Page Wrapper & Header
+   -------------------------------------------------------------------------- */
+.ArticlePage {
+  /* Keeps the approved composition centered while using the available desktop viewport. */
+  width: min(92vw, 1728px);
+  margin: 0 auto;
+  padding: 0 24px 80px 24px;
+  position: relative;
+}
+
+.header-container {
+  padding: 32px 0 16px 0;
+  display: flex;
+  align-items: center;
+}
+
+/* Back Button */
+.BackButton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
+  background-color: var(--bg-btn-back);
+  border: 1px solid var(--border-light);
+  color: var(--color-navy);
+  cursor: pointer;
+  box-shadow: var(--shadow-btn);
+  transition: all var(--transition-smooth);
+  outline: none;
+}
+
+.BackButton:hover {
+  background-color: #EDF2F7;
+  transform: translateX(-3px);
+  border-color: #CBD5E0;
+}
+
+.BackButton:focus-visible {
+  outline: 2px solid var(--color-green);
+  outline-offset: 2px;
+}
+
+.BackButton svg {
+  transition: transform var(--transition-smooth);
+}
+
+.BackButton:hover svg {
+  transform: translateX(-1px);
+}
+
+/* --------------------------------------------------------------------------
+   5. Hero Section
+   -------------------------------------------------------------------------- */
+.ArticleHero {
+  background-color: var(--bg-hero);
+  border-radius: 24px;
+  padding: 48px;
+  margin-bottom: 48px;
+  display: grid;
+  grid-template-columns: minmax(0, 1.2fr) minmax(0, 0.8fr);
+  gap: 40px;
+  align-items: center;
+  border: 1px solid rgba(226, 232, 240, 0.5);
+}
+
+.hero-content {
+  display: flex;
+  flex-direction: column;
+}
+
+.hero-title {
+  font-size: 2.85rem; /* ~46px */
+  font-weight: 800;
+  line-height: 1.15;
+  color: var(--color-navy);
+  letter-spacing: -0.03em;
+  margin-bottom: 24px;
+}
+
+.hero-intro {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  font-size: 1.08rem;
+  color: var(--color-navy-light);
+  max-width: 620px;
+}
+
+.hero-intro p {
+  opacity: 0.95;
+}
+
+.intro-cta {
+  font-weight: 600;
+  color: var(--color-green);
+  margin-top: 8px;
+}
+
+.hero-visual {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.hero-img {
+  width: 100%;
+  max-width: 380px;
+  height: auto;
+  border-radius: 18px;
+  object-fit: contain;
+  mix-blend-mode: multiply; /* Blends vector illustration background */
+}
+
+/* --------------------------------------------------------------------------
+   6. Main Grid (Two Column)
+   -------------------------------------------------------------------------- */
+.article-container {
+  display: grid;
+  grid-template-columns: 280px minmax(0, 1fr);
+  gap: 64px;
+  position: relative;
+}
+
+/* --------------------------------------------------------------------------
+   7. Sidebar Desktop Navigation
+   -------------------------------------------------------------------------- */
+.ArticleNavigation {
+  position: relative;
+}
+
+.desktop-nav-menu {
+  position: sticky;
+  top: 40px;
+  height: calc(100vh - 80px);
+  overflow-y: auto;
+  padding-right: 12px;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(226, 232, 240, 0.8) transparent;
+}
+
+.desktop-nav-menu::-webkit-scrollbar {
+  width: 4px;
+}
+
+.desktop-nav-menu::-webkit-scrollbar-thumb {
+  background: var(--border-light);
+  border-radius: 10px;
+}
+
+.nav-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.nav-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 10px 12px;
+  border-radius: 8px;
+  text-decoration: none;
+  color: var(--color-navy-light);
+  font-size: 0.92rem;
+  font-weight: 500;
+  line-height: 1.4;
+  transition: all var(--transition-fast);
+  border: 1px solid transparent;
+}
+
+.nav-num {
+  font-family: monospace;
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--color-body);
+  opacity: 0.6;
+}
+
+.nav-text {
+  flex: 1;
+}
+
+.nav-item:hover {
+  background-color: var(--bg-hero);
+  color: var(--color-navy);
+}
+
+.nav-item.active {
+  background-color: var(--color-green-light);
+  color: var(--color-green);
+  font-weight: 600;
+  border-left: 3px solid var(--color-green);
+  border-radius: 0 8px 8px 0;
+}
+
+.nav-item.active .nav-num {
+  color: var(--color-green);
+  opacity: 1;
+}
+
+/* --------------------------------------------------------------------------
+   8. Mobile Navigation Component
+   -------------------------------------------------------------------------- */
+.MobileBenefitNavigation {
+  display: none; /* Hidden on desktop */
+}
+
+/* --------------------------------------------------------------------------
+   9. Article Content & Sections
+   -------------------------------------------------------------------------- */
+.article-content {
+  max-width: 750px; /* Optimized reading width */
+  margin-left: 0;
+  min-width: 0;
+}
+
+.ArticleSection {
+  padding-bottom: 56px;
+  margin-bottom: 56px;
+  border-bottom: 1px solid var(--border-light);
+  position: relative;
+  scroll-margin-top: 80px; /* offset for header/scrolling spacing */
+}
+
+.ArticleSection:last-of-type {
+  border-bottom: none;
+  padding-bottom: 24px;
+}
+
+.section-num {
+  font-size: 2.85rem;
+  font-weight: 800;
+  color: var(--color-green);
+  opacity: 0.18;
+  line-height: 1;
+  margin-bottom: -12px;
+  letter-spacing: -0.02em;
+}
+
+.section-title {
+  font-size: 1.95rem; /* ~31px */
+  font-weight: 700;
+  line-height: 1.25;
+  color: var(--color-navy);
+  margin-bottom: 20px;
+}
+
+.section-body {
+  font-size: 1.08rem; /* ~17px body */
+  line-height: 1.75;
+  color: var(--color-navy-light);
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+/* Highlight Elements within Content */
+.highlight-quote {
+  font-style: italic;
+  font-weight: 600;
+  color: var(--color-navy);
+}
+
+.highlight-stat {
+  font-weight: 700;
+  color: var(--color-green);
+  background-color: var(--color-green-light);
+  padding: 2px 6px;
+  border-radius: 4px;
+}
+
+.highlight-ref {
+  font-weight: 600;
+  border-bottom: 1px dashed var(--color-green);
+  color: var(--color-navy);
+}
+
+.research-link {
+  color: var(--color-blue);
+  text-decoration: none;
+  font-weight: 600;
+  transition: color var(--transition-fast);
+  border-bottom: 1px solid transparent;
+}
+
+.research-link:hover {
+  color: var(--color-blue-hover);
+  border-bottom-color: var(--color-blue-hover);
+}
+
+/* --------------------------------------------------------------------------
+   10. The Bottom Line Section
+   -------------------------------------------------------------------------- */
+.TheBottomLine {
+  background-color: var(--bg-highlight);
+  border-radius: 20px;
+  padding: 40px;
+  margin-top: 40px;
+  margin-bottom: 56px;
+  border: 1px solid var(--border-green);
+  scroll-margin-top: 80px;
+}
+
+.bottom-line-title {
+  font-size: 1.75rem;
+  font-weight: 800;
+  color: var(--color-green);
+  margin-bottom: 18px;
+}
+
+.bottom-line-body {
+  font-size: 1.08rem;
+  line-height: 1.75;
+  color: var(--color-navy-light);
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.conclusion-highlight {
+  font-weight: 500;
+  color: var(--color-navy);
+}
+
+/* --------------------------------------------------------------------------
+   11. Footer / Back to Top
+   -------------------------------------------------------------------------- */
+.article-footer {
+  display: flex;
+  justify-content: center;
+  padding-top: 24px;
+  border-top: 1px solid var(--border-light);
+}
+
+.BackToTop {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--bg-btn-back);
+  border: 1px solid var(--border-light);
+  color: var(--color-navy);
+  padding: 12px 24px;
+  border-radius: 30px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: var(--shadow-btn);
+  transition: all var(--transition-smooth);
+}
+
+.BackToTop:hover {
+  background-color: #EDF2F7;
+  transform: translateY(-2px);
+  border-color: #CBD5E0;
+}
+
+.BackToTop svg {
+  transition: transform var(--transition-smooth);
+}
+
+.BackToTop:hover svg {
+  transform: translateY(-2px);
+}
+
+/* --------------------------------------------------------------------------
+   12. Toast Notification Styling
+   -------------------------------------------------------------------------- */
+.toast {
+  position: fixed;
+  bottom: 28px;
+  left: 50%;
+  transform: translateX(-50%) translateY(100px);
+  background-color: var(--color-navy);
+  color: #FFFFFF;
+  padding: 12px 24px;
+  border-radius: 50px;
+  font-size: 0.95rem;
+  font-weight: 500;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+  opacity: 0;
+  pointer-events: none;
+  transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 0.3s ease;
+  z-index: 1000;
+}
+
+.toast.show {
+  transform: translateX(-50%) translateY(0);
+  opacity: 1;
+}
+
+/* --------------------------------------------------------------------------
+   13. Responsive Breakpoints
+   -------------------------------------------------------------------------- */
+
+/* Tablet & Smaller Desktops */
+@media (max-width: 1024px) {
+  .ArticleHero {
+    grid-template-columns: 1fr;
+    gap: 32px;
+    padding: 36px;
+    margin-bottom: 32px;
+  }
+
+  .hero-title {
+    font-size: 2.35rem;
+    margin-bottom: 18px;
+  }
+
+  .hero-visual {
+    order: -1; /* Display visual above text on tablet */
+  }
+
+  .hero-img {
+    max-width: 320px;
+  }
+
+  .article-container {
+    grid-template-columns: 1fr; /* Stack into single column */
+    gap: 40px;
+  }
+
+  /* Hide Desktop Sidebar */
+  .ArticleNavigation {
+    display: none;
+  }
+
+  /* Show Mobile Navigation Bar */
+  .MobileBenefitNavigation {
+    display: block;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    margin-bottom: 32px;
+    background-color: var(--bg-page);
+    padding: 12px 0;
+    border-bottom: 1px solid var(--border-light);
+  }
+
+  .mobile-nav-toggle {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 14px 20px;
+    background-color: var(--bg-card);
+    border: 1px solid var(--border-light);
+    border-radius: 12px;
+    color: var(--color-navy);
+    font-size: 1rem;
+    font-weight: 700;
+    cursor: pointer;
+    box-shadow: var(--shadow-btn);
+    transition: all var(--transition-smooth);
+  }
+
+  .mobile-nav-toggle:hover {
+    border-color: #CBD5E0;
+  }
+
+  .mobile-nav-toggle .chevron-icon {
+    transition: transform var(--transition-smooth);
+  }
+
+  .mobile-nav-toggle[aria-expanded="true"] .chevron-icon {
+    transform: rotate(180deg);
+  }
+
+  .mobile-nav-menu {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background-color: var(--bg-card);
+    border: 1px solid var(--border-light);
+    border-radius: 12px;
+    margin-top: 8px;
+    box-shadow: var(--shadow-nav);
+    max-height: 380px;
+    overflow-y: auto;
+    z-index: 200;
+  }
+
+  .mobile-nav-list {
+    display: flex;
+    flex-direction: column;
+    padding: 8px;
+  }
+
+  .mobile-nav-item {
+    padding: 12px 16px;
+    border-radius: 8px;
+    text-decoration: none;
+    color: var(--color-navy-light);
+    font-size: 0.95rem;
+    font-weight: 500;
+    transition: all var(--transition-fast);
+  }
+
+  .mobile-nav-item:hover,
+  .mobile-nav-item.active {
+    background-color: var(--bg-hero);
+    color: var(--color-green);
+    font-weight: 600;
+  }
+
+  /* Mobile Accordion Styles */
+  .ArticleSection {
+    padding-bottom: 24px;
+    margin-bottom: 24px;
+    border-bottom: 1px solid var(--border-light);
+  }
+
+  .ArticleSection .section-title {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    cursor: pointer;
+    user-select: none;
+    padding: 8px 0;
+    transition: color var(--transition-fast);
+  }
+
+  .ArticleSection .section-title:hover {
+    color: var(--color-green);
+  }
+
+  .ArticleSection .section-title::before {
+    content: '▸';
+    display: inline-block;
+    width: 16px;
+    font-size: 1.15rem;
+    color: var(--color-green);
+    transition: transform var(--transition-fast);
+    flex-shrink: 0;
+  }
+
+  .ArticleSection.expanded .section-title::before {
+    content: '▾';
+  }
+
+  .ArticleSection.collapsed .section-body {
+    display: none !important;
+  }
+  
+  .ArticleSection.collapsed {
+    padding-bottom: 8px;
+    margin-bottom: 16px;
+  }
+}
+
+/* Mobile Screens */
+@media (max-width: 600px) {
+  body {
+    line-height: 1.65;
+  }
+
+  .ArticlePage {
+    padding: 0 16px 60px 16px;
+  }
+
+  .header-container {
+    padding: 24px 0 12px 0;
+  }
+
+  .BackButton {
+    width: 42px;
+    height: 42px;
+  }
+
+  .ArticleHero {
+    padding: 24px;
+    border-radius: 16px;
+  }
+
+  .hero-title {
+    font-size: 1.85rem; /* ~30px */
+    letter-spacing: -0.02em;
+    margin-bottom: 14px;
+  }
+
+  .hero-intro {
+    font-size: 0.98rem;
+    gap: 12px;
+  }
+
+  .hero-img {
+    max-width: 240px;
+  }
+
+  .section-num {
+    font-size: 2.2rem;
+  }
+
+  .section-title {
+    font-size: 1.45rem; /* ~23px */
+    margin-bottom: 14px;
+  }
+
+  .section-body {
+    font-size: 0.98rem; /* ~15.5px */
+    gap: 14px;
+  }
+
+  .TheBottomLine {
+    padding: 24px;
+    border-radius: 16px;
+  }
+
+  .bottom-line-title {
+    font-size: 1.45rem;
+    margin-bottom: 12px;
+  }
+
+  .bottom-line-body {
+    font-size: 0.98rem;
+  }
+}
+
+/* Small Screen Adjustments */
+@media (max-width: 360px) {
+  .hero-title {
+    font-size: 1.65rem;
+  }
+  
+  .section-title {
+    font-size: 1.3rem;
+  }
+}

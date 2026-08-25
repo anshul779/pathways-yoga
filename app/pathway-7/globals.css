@@ -1,0 +1,1016 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* =========================================================================
+   Week of Healthy Meal Plans — editorial design system
+   ========================================================================= */
+
+:root {
+  /* Color */
+  --cream: #F6F1E7;
+  --surface: #FFFFFF;
+  --moss-tint: #EBEFE1;
+  --moss-tint-2: #E3E9D6;
+  --ink: #20261F;
+  --ink-soft: #5A6455;
+  --ink-faint: #8A9282;
+  --forest: #2B4B34;
+  --forest-deep: #1B3324;
+  --sage: #6E8F6C;
+  --clay: #B06B34;
+  --clay-soft: #F3E4D2;
+  --border: #E1DBC8;
+  --border-soft: #EAE5D5;
+  --shadow-soft: 0 1px 2px rgba(32, 38, 31, 0.05), 0 10px 26px rgba(32, 38, 31, 0.06);
+  --shadow-lift: 0 10px 30px rgba(32, 38, 31, 0.12);
+
+  /* Type */
+  --font-display: "DM Serif Display", "Iowan Old Style", "Georgia", serif;
+  --font-body: "Inter", system-ui, -apple-system, sans-serif;
+  --font-mono: "Space Mono", ui-monospace, "SFMono-Regular", monospace;
+
+  --radius-lg: 22px;
+  --radius-md: 14px;
+  --radius-sm: 9px;
+
+  --container: 1180px;
+  --container-lg: 1280px;
+}
+
+* { box-sizing: border-box; }
+
+html {
+  -webkit-font-smoothing: antialiased;
+  scroll-behavior: smooth;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+body {
+  margin: 0;
+  background: var(--cream);
+  color: var(--ink);
+  font-family: var(--font-body);
+  line-height: 1.65;
+  overflow-x: hidden;
+}
+
+img { display: block; max-width: 100%; }
+a { color: inherit; }
+button { font-family: inherit; }
+
+.display { font-family: var(--font-display); font-weight: 400; }
+.mono { font-family: var(--font-mono); letter-spacing: 0.02em; }
+
+.sr-only {
+  position: absolute;
+  width: 1px; height: 1px;
+  padding: 0; margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.skip-link {
+  position: absolute;
+  left: 12px; top: -60px;
+  background: var(--forest);
+  color: #fff;
+  padding: 10px 16px;
+  border-radius: var(--radius-sm);
+  z-index: 1000;
+  transition: top 0.15s ease;
+}
+.skip-link:focus { top: 12px; }
+
+:focus-visible {
+  outline: 2.5px solid var(--forest);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+.page {
+  max-width: var(--container);
+  margin: 0 auto;
+  /* Small reserved space only, so the fixed Back-to-Top pill never overlaps
+     footer text — the actual section-to-footer gap comes from the footer's
+     own margin-top below, not from stacking both. */
+  padding: 0 clamp(18px, 4vw, 48px) clamp(16px, 3vw, 28px);
+}
+
+.band {
+  width: 100%;
+}
+.band-inner {
+  max-width: var(--container);
+  margin: 0 auto;
+  padding: 0 clamp(18px, 4vw, 48px);
+}
+
+@media (min-width: 1440px) {
+  .page, .band-inner, .topbar, .section-indicator-inner {
+    max-width: var(--container-lg);
+    padding-left: 56px;
+    padding-right: 56px;
+  }
+}
+
+/* ---------- Scroll-aware sticky section indicator ---------- */
+.section-indicator {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%;
+  z-index: 900;
+  background: rgba(246, 241, 231, 0.92);
+  backdrop-filter: blur(6px);
+  border-bottom: 1px solid var(--border);
+  transform: translateY(-100%);
+  opacity: 0;
+  transition: transform 0.22s ease, opacity 0.22s ease;
+  pointer-events: none;
+}
+.section-indicator.is-visible {
+  transform: translateY(0);
+  opacity: 1;
+}
+.section-indicator-inner {
+  max-width: var(--container);
+  margin: 0 auto;
+  padding: 9px clamp(18px, 4vw, 48px);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.section-indicator-index {
+  font-size: 11.5px;
+  color: var(--clay);
+  flex-shrink: 0;
+}
+.section-indicator-name {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--forest-deep);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  flex-shrink: 1;
+  min-width: 0;
+}
+.section-indicator-track {
+  flex: 1 1 auto;
+  height: 3px;
+  border-radius: 100px;
+  background: rgba(43, 75, 52, 0.1);
+  overflow: hidden;
+  max-width: 320px;
+  margin-left: auto;
+}
+.section-indicator-fill {
+  height: 100%;
+  width: 0%;
+  background: linear-gradient(90deg, var(--forest), var(--sage));
+  transition: width 0.12s ease-out;
+}
+@media (min-width: 1024px) {
+  .section-indicator-inner { padding-top: 11px; padding-bottom: 11px; gap: 16px; }
+  .section-indicator-name { font-size: 13.5px; }
+  .section-indicator-track { max-width: 420px; }
+}
+
+/* ---------- Top utility bar ---------- */
+.topbar {
+  display: flex;
+  align-items: center;
+  padding: 18px clamp(18px, 4vw, 48px) 6px;
+  max-width: var(--container);
+  margin: 0 auto;
+}
+.back-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  color: var(--ink);
+  font-size: 13.5px;
+  font-weight: 600;
+  padding: 8px 14px 8px 10px;
+  border-radius: 100px;
+  cursor: pointer;
+  text-decoration: none;
+  min-height: 44px;
+  box-sizing: border-box;
+}
+.back-btn svg { width: 16px; height: 16px; }
+.back-btn:hover { border-color: var(--forest); color: var(--forest); }
+
+/* Desktop/laptop+ only: mobile keeps the sizing/placement above untouched.
+   Larger, more comfortable button with a bit more top space so it reads as
+   an intentional desktop control rather than the mobile button stretched. */
+@media (min-width: 1024px) {
+  .topbar { padding-top: 32px; padding-bottom: 10px; }
+  .back-btn {
+    font-size: 15px;
+    padding: 11px 20px 11px 14px;
+    gap: 8px;
+  }
+  .back-btn svg { width: 18px; height: 18px; }
+}
+
+/* ---------- Hero ---------- */
+.hero {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 32px;
+  padding-top: 18px;
+  padding-bottom: 8px;
+}
+@media (min-width: 900px) {
+  .hero {
+    grid-template-columns: 0.95fr 1.05fr;
+    align-items: center;
+    gap: clamp(28px, 3vw, 44px);
+    padding-top: 22px;
+    padding-bottom: 0;
+  }
+}
+.hero-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--forest);
+  margin-bottom: 18px;
+}
+.hero-eyebrow::before {
+  content: "";
+  width: 7px; height: 7px;
+  border-radius: 50%;
+  background: var(--clay);
+}
+.hero h1 {
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: clamp(38px, 6vw, 62px);
+  line-height: 1.04;
+  margin: 0 0 20px;
+  color: var(--forest-deep);
+}
+.hero-intro {
+  font-size: 18px;
+  color: var(--ink-soft);
+  max-width: 52ch;
+  margin: 0 0 14px;
+}
+.hero-intro + .hero-intro { margin-top: 12px; }
+.hero-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px 22px;
+  margin-top: 26px;
+  font-size: 13.5px;
+  color: var(--ink-soft);
+  font-weight: 600;
+}
+.hero-meta span { display: inline-flex; align-items: center; gap: 8px; }
+.hero-meta span::before {
+  content: "";
+  width: 5px; height: 5px;
+  border-radius: 50%;
+  background: var(--sage);
+}
+.hero-image {
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  aspect-ratio: 4 / 3.3;
+  box-shadow: var(--shadow-lift);
+  background: var(--moss-tint);
+}
+.hero-image img { width: 100%; height: 100%; object-fit: cover; }
+
+@media (min-width: 1024px) {
+  section { padding-top: clamp(40px, 5vw, 64px); }
+  section:first-of-type { padding-top: 18px; }
+  .hero-image { aspect-ratio: 5 / 4; }
+}
+
+/* ---------- Section shell ---------- */
+section { padding-top: clamp(40px, 9vw, 76px); scroll-margin-top: 84px; }
+section:first-of-type { padding-top: clamp(24px, 6vw, 56px); }
+
+.section-eyebrow {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--sage);
+  margin-bottom: 10px;
+  display: block;
+}
+.section-title {
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: clamp(28px, 4vw, 40px);
+  color: var(--forest-deep);
+  margin: 0 0 18px;
+  line-height: 1.1;
+}
+.section-lede {
+  font-size: 17.5px;
+  color: var(--ink-soft);
+  max-width: 68ch;
+  margin: 0 0 8px;
+}
+
+/* ---------- Benefits ---------- */
+.benefits-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 32px;
+  margin-top: 32px;
+  align-items: start;
+}
+@media (min-width: 880px) {
+  .benefits-grid { grid-template-columns: 0.85fr 1.15fr; gap: 48px; }
+}
+.benefits-image {
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  aspect-ratio: 5 / 4.4;
+  box-shadow: var(--shadow-soft);
+}
+.benefits-image img { width: 100%; height: 100%; object-fit: cover; }
+.benefit-list {
+  list-style: none;
+  margin: 8px 0 0;
+  padding: 0;
+  display: grid;
+  gap: 4px;
+}
+.benefit-item {
+  display: grid;
+  grid-template-columns: 30px 1fr;
+  gap: 14px;
+  padding: 18px 4px;
+  border-top: 1px solid var(--border-soft);
+}
+.benefit-item:last-child { border-bottom: 1px solid var(--border-soft); }
+.benefit-icon {
+  color: var(--forest);
+  padding-top: 2px;
+}
+.benefit-icon svg { width: 22px; height: 22px; }
+.benefit-item h3 {
+  font-family: var(--font-body);
+  font-weight: 700;
+  font-size: 16px;
+  margin: 0 0 4px;
+  color: var(--ink);
+}
+.benefit-item p { margin: 0; color: var(--ink-soft); font-size: 15px; }
+
+/* ---------- Science recommendations ---------- */
+.science-grid {
+  margin-top: 34px;
+  display: grid;
+  gap: 0;
+  border-top: 1px solid var(--border);
+}
+@media (min-width: 760px) {
+  .science-grid { grid-template-columns: 1fr 1fr; }
+}
+.science-item {
+  padding: 28px 4px;
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  gap: 18px;
+}
+@media (min-width: 760px) {
+  .science-item:nth-child(odd) { border-right: 1px solid var(--border); padding-right: 28px; }
+  .science-item:nth-child(even) { padding-left: 28px; }
+}
+.science-index {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  color: var(--clay);
+  padding-top: 3px;
+  min-width: 26px;
+}
+.science-item h3 {
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: 22px;
+  margin: 0 0 8px;
+  color: var(--forest-deep);
+}
+.science-item p { margin: 0; color: var(--ink-soft); font-size: 15px; }
+.science-image {
+  margin-top: 34px;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  aspect-ratio: 16 / 7;
+  box-shadow: var(--shadow-soft);
+}
+.science-image img { width: 100%; height: 100%; object-fit: cover; }
+
+/* ---------- Calorie callout ---------- */
+.calorie-band {
+  background: var(--moss-tint);
+  border-radius: var(--radius-lg);
+  padding: clamp(28px, 4vw, 44px);
+}
+.calorie-band-head { margin-bottom: 22px; }
+.calorie-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 18px;
+}
+@media (min-width: 640px) {
+  .calorie-grid { grid-template-columns: 1fr 1fr; }
+}
+.calorie-card {
+  background: var(--surface);
+  border-radius: var(--radius-md);
+  padding: 24px 26px;
+  border: 1px solid var(--border-soft);
+}
+.calorie-card-label {
+  font-size: 13.5px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--ink-soft);
+}
+.calorie-card-value {
+  font-family: var(--font-mono);
+  font-size: clamp(30px, 4vw, 38px);
+  color: var(--forest-deep);
+  margin-top: 8px;
+}
+.calorie-card-value span { font-size: 15px; color: var(--ink-faint); margin-left: 4px; }
+.calorie-note {
+  margin-top: 20px;
+  font-size: 14.5px;
+  color: var(--ink-soft);
+  border-left: 3px solid var(--clay);
+  padding-left: 14px;
+}
+
+/* ---------- Flexibility / substitutions ---------- */
+.flex-grid {
+  margin-top: 30px;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 30px;
+}
+@media (min-width: 860px) {
+  .flex-grid { grid-template-columns: 1.1fr 0.9fr; }
+}
+.flex-text p { color: var(--ink-soft); font-size: 16px; }
+.sub-chips { display: grid; gap: 12px; margin-top: 6px; }
+.sub-chip {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 16px 18px;
+}
+.sub-chip strong { font-size: 15px; }
+.sub-chip .swap {
+  color: var(--clay);
+  font-family: var(--font-mono);
+  font-size: 13px;
+}
+
+/* ---------- Plan selector + day experience ---------- */
+/* .plan-select-band is a <section>, which already gets its top spacing
+   from the base `section { padding-top }` rule below — no extra margin here. */
+.plan-selector {
+  display: inline-flex;
+  gap: 6px;
+  background: var(--moss-tint-2);
+  padding: 6px;
+  border-radius: 100px;
+  margin-top: 22px;
+}
+.plan-selector button {
+  border: none;
+  background: transparent;
+  padding: 12px 26px;
+  border-radius: 100px;
+  font-weight: 700;
+  font-size: 15px;
+  color: var(--ink-soft);
+  cursor: pointer;
+}
+.plan-selector button[aria-selected="true"] {
+  background: var(--forest);
+  color: #fff;
+  box-shadow: var(--shadow-soft);
+}
+.plan-flex-note {
+  margin-top: 16px;
+  font-size: 14px;
+  color: var(--ink-soft);
+  max-width: 60ch;
+}
+
+.plan-panel { margin-top: 34px; }
+.plan-panel-heading {
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: clamp(24px, 3.4vw, 30px);
+  color: var(--forest-deep);
+  margin: 0 0 18px;
+}
+
+.day-rail-wrap { position: relative; }
+.day-rail-wrap::before,
+.day-rail-wrap::after {
+  content: "";
+  position: absolute;
+  top: 0; bottom: 14px;
+  width: 28px;
+  z-index: 2;
+  pointer-events: none;
+  opacity: 1;
+  transition: opacity 0.2s ease;
+}
+.day-rail-wrap::before {
+  left: 0;
+  background: linear-gradient(90deg, var(--cream), rgba(246, 241, 231, 0));
+}
+.day-rail-wrap::after {
+  right: 0;
+  background: linear-gradient(270deg, var(--cream), rgba(246, 241, 231, 0));
+}
+.day-rail-wrap.is-start::before,
+.day-rail-wrap:has(.day-rail.is-start)::before { opacity: 0; }
+.day-rail-wrap.is-end::after,
+.day-rail-wrap:has(.day-rail.is-end)::after { opacity: 0; }
+.day-rail {
+  display: flex;
+  gap: 8px;
+  overflow-x: auto;
+  padding: 4px 2px 14px;
+  -webkit-overflow-scrolling: touch;
+  scroll-snap-type: x proximity;
+}
+.day-pill {
+  scroll-snap-align: start;
+  flex: 0 0 auto;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  color: var(--ink);
+  font-weight: 700;
+  font-size: 14px;
+  padding: 10px 18px;
+  border-radius: 100px;
+  cursor: pointer;
+  min-height: 44px;
+  transition: border-color 0.15s ease, color 0.15s ease, background 0.15s ease;
+}
+.day-pill.is-active {
+  background: var(--forest);
+  border-color: var(--forest);
+  color: #fff;
+}
+.day-pill:hover:not(.is-active) { border-color: var(--forest); color: var(--forest); }
+
+/* Desktop: all seven days fit without scrolling */
+@media (min-width: 900px) {
+  .day-rail-wrap::before, .day-rail-wrap::after { display: none; }
+  .day-rail {
+    overflow-x: visible;
+    flex-wrap: nowrap;
+    gap: 10px;
+    padding: 4px 2px 6px;
+  }
+  .day-pill { padding: 11px 22px; }
+}
+
+.day-panel {
+  margin-top: 24px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: clamp(22px, 3.6vw, 36px);
+}
+.day-head { margin-bottom: 22px; }
+.day-head-eyebrow {
+  display: block;
+  font-size: 12px;
+  color: var(--ink-faint);
+  margin-bottom: 6px;
+}
+.day-head-title {
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: clamp(26px, 3.6vw, 34px);
+  color: var(--forest-deep);
+  margin: 0;
+}
+
+.meal-timeline {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.meal-row {
+  display: grid;
+  grid-template-columns: 36px 1fr;
+  gap: 16px;
+}
+.meal-row-rail {
+  position: relative;
+  display: flex;
+  justify-content: center;
+}
+.meal-row-rail::before {
+  content: "";
+  position: absolute;
+  top: 34px; bottom: -8px;
+  width: 1px;
+  background: var(--border);
+}
+.meal-row:last-child .meal-row-rail::before { display: none; }
+.meal-row-dot {
+  width: 34px; height: 34px;
+  border-radius: 50%;
+  background: var(--moss-tint);
+  color: var(--forest);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+.meal-row-dot svg { width: 17px; height: 17px; }
+.meal-row-dot--snack { background: var(--clay-soft); color: var(--clay); }
+.meal-row-body { padding-bottom: 26px; }
+.meal-row-label {
+  display: block;
+  font-size: 12.5px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--sage);
+  margin-bottom: 5px;
+}
+.meal-row-text {
+  display: block;
+  font-size: 15.5px;
+  color: var(--ink);
+  line-height: 1.6;
+  max-width: 62ch;
+}
+
+/* ---------- Day visual band (between plan and callouts) ---------- */
+.day-visual-note {
+  margin-top: 18px;
+  font-size: 13.5px;
+  color: var(--ink-faint);
+}
+
+/* ---------- Make ahead / batch cooking ---------- */
+.callout-band {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 28px;
+  background: var(--forest-deep);
+  color: var(--cream);
+  border-radius: var(--radius-lg);
+  padding: clamp(28px, 4vw, 44px);
+  overflow: hidden;
+}
+@media (min-width: 880px) {
+  .callout-band { grid-template-columns: 1fr 1fr; align-items: center; }
+}
+.callout-band .section-eyebrow { color: var(--sage); }
+.callout-band .section-title { color: #fff; }
+.callout-band p { color: rgba(246, 241, 231, 0.82); font-size: 16px; }
+.callout-image {
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  aspect-ratio: 4 / 3;
+}
+.callout-image img { width: 100%; height: 100%; object-fit: cover; }
+.callout-list { margin: 18px 0 0; padding-left: 20px; color: rgba(246, 241, 231, 0.82); }
+.callout-list li { margin-bottom: 8px; }
+
+/* ---------- Nutrition essentials ---------- */
+.tag-cloud {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 8px 10px;
+  margin-top: 20px;
+}
+.tag-chip {
+  min-width: 0;
+  height: 58px;
+  border: 1px solid var(--border);
+  border-top: 2px solid var(--tag-accent);
+  background: rgba(255, 255, 255, 0.56);
+  border-radius: var(--radius-sm);
+  padding: 6px 8px;
+  font-family: var(--font-display);
+  font-size: 16px;
+  line-height: 1.1;
+  font-weight: 400;
+  color: var(--ink);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  box-shadow: 0 2px 8px rgba(32, 38, 31, 0.04);
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+.tag-chip:hover,
+.tag-chip:focus-visible {
+  border-color: var(--tag-accent);
+  box-shadow: 0 4px 12px rgba(32, 38, 31, 0.08);
+}
+.tag-icon {
+  width: 26px;
+  height: 26px;
+  flex: 0 0 26px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: var(--tag-tint);
+  color: var(--tag-accent);
+}
+.tag-icon svg {
+  width: 17px;
+  height: 17px;
+}
+.tag-chip--grain { --tag-accent: #6E8F6C; --tag-tint: #E8EEDD; }
+.tag-chip--fruit { --tag-accent: #B88B2E; --tag-tint: #F5EBD0; }
+.tag-chip--vegetable { --tag-accent: #789B68; --tag-tint: #E5EDDE; }
+.tag-chip--protein { --tag-accent: #C77B62; --tag-tint: #F5E1D9; }
+.tag-chip--fish { --tag-accent: #668DB8; --tag-tint: #E2EAF4; }
+.tag-chip--nuts { --tag-accent: #9175AA; --tag-tint: #ECE5F1; }
+.tag-chip--legumes { --tag-accent: #C26F88; --tag-tint: #F4E1E7; }
+.tag-chip--fermented { --tag-accent: #5A9A95; --tag-tint: #E0EFED; }
+.tag-chip--fats { --tag-accent: #C68949; --tag-tint: #F6E8D7; }
+@media (max-width: 700px) {
+  .tag-cloud { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .tag-chip {
+    height: 52px;
+    font-size: 14px;
+    gap: 7px;
+    padding-left: 7px;
+    padding-right: 7px;
+  }
+  .tag-chip:last-child { grid-column: 1 / -1; }
+  .tag-icon {
+    width: 24px;
+    height: 24px;
+    flex-basis: 24px;
+  }
+  .tag-icon svg { width: 16px; height: 16px; }
+}
+
+/* ---------- Summary ---------- */
+.summary-band {
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  padding: 44px 0;
+  text-align: center;
+}
+.summary-takeaway {
+  font-family: var(--font-display);
+  font-size: clamp(24px, 3.6vw, 32px);
+  color: var(--forest-deep);
+  max-width: 46ch;
+  margin: 0 auto 22px;
+  line-height: 1.3;
+}
+.summary-body {
+  max-width: 60ch;
+  margin: 0 auto;
+  color: var(--ink-soft);
+  font-size: 16px;
+}
+.summary-body p { margin: 0 0 12px; }
+
+/* ---------- Final CTA ---------- */
+.cta-band {
+  text-align: center;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: clamp(30px, 5vw, 52px);
+  background: var(--moss-tint);
+}
+.cta-band h2 {
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: clamp(26px, 3.6vw, 34px);
+  color: var(--forest-deep);
+  margin: 0 0 12px;
+}
+.cta-band p {
+  color: var(--ink-soft);
+  max-width: 50ch;
+  margin: 0 auto 24px;
+}
+.cta-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--forest);
+  color: #fff;
+  border: none;
+  font-weight: 700;
+  font-size: 15px;
+  padding: 14px 28px;
+  border-radius: 100px;
+  cursor: pointer;
+  text-decoration: none;
+}
+.cta-button:hover { background: var(--forest-deep); }
+
+/* ---------- Footer ---------- */
+.site-footer {
+  margin-top: clamp(40px, 8vw, 64px);
+  padding: 30px clamp(18px, 4vw, 48px) 40px;
+  border-top: 1px solid var(--border);
+  max-width: var(--container);
+  margin-left: auto;
+  margin-right: auto;
+  font-size: 13.5px;
+  color: var(--ink-faint);
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+/* ---------- Back to top ---------- */
+.back-to-top {
+  position: fixed;
+  left: 50%;
+  bottom: calc(18px + env(safe-area-inset-bottom, 0px));
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: var(--forest);
+  color: #fff;
+  border: none;
+  padding: 12px 18px;
+  border-radius: 100px;
+  font-weight: 700;
+  font-size: 13.5px;
+  cursor: pointer;
+  box-shadow: var(--shadow-lift);
+  opacity: 0;
+  transform: translate(-50%, 10px);
+  pointer-events: none;
+  transition: opacity 0.18s ease, transform 0.18s ease;
+  z-index: 500;
+}
+.back-to-top.is-visible {
+  opacity: 1;
+  transform: translate(-50%, 0);
+  pointer-events: auto;
+}
+.back-to-top svg { width: 16px; height: 16px; }
+@media (min-width: 1024px) {
+  /* Desktop: anchor to a fixed corner instead of horizontal centering, and
+     drop the transform from the show/hide transition entirely. On mobile,
+     show/hide still slides via translate(-50%, ...) because the button is
+     also horizontally centered there — so position and animation are
+     coupled. On desktop we don't want that: visibility should be able to
+     change without the position rule ever being touched. */
+  .back-to-top {
+    left: auto;
+    right: 28px;
+    bottom: 28px;
+    transform: none;
+    padding: 13px 22px;
+    font-size: 14px;
+  }
+  .back-to-top.is-visible { transform: none; }
+}
+
+/* ---------- Zoom / overflow safety ----------
+   NOTE: this used to also force `.page, .band-inner { max-width: 100%; }`
+   here, which — because it came after the earlier `max-width: var(--container)`
+   rules with equal specificity — silently won the cascade and uncapped the
+   container on every viewport. That was the actual root cause of the desktop
+   "stretching" behavior (images, sections, and typography all appearing to
+   scale with viewport width): the container system was never actually being
+   applied. Overflow-x is fully handled by html/body below without needing to
+   also blow away the container's max-width, so that override has been removed. */
+html, body { max-width: 100%; overflow-x: hidden; }
+
+@media (max-width: 700px) {
+  section { padding-top: 32px; }
+  section:first-of-type { padding-top: 20px; }
+  .hero { gap: 24px; padding-top: 12px; }
+  .hero h1 { margin-bottom: 16px; }
+  .hero-intro { margin-bottom: 10px; }
+  .hero-intro + .hero-intro { margin-top: 8px; }
+  .hero-meta { margin-top: 18px; }
+  .benefits-grid { gap: 24px; margin-top: 24px; }
+  .benefit-item { padding-top: 14px; padding-bottom: 14px; }
+  .science-grid { margin-top: 26px; }
+  .science-item { padding-top: 20px; padding-bottom: 20px; }
+  .science-image { margin-top: 26px; }
+  .calorie-band { padding: 22px; }
+  .calorie-band-head { margin-bottom: 16px; }
+  .calorie-grid { gap: 12px; }
+  .calorie-card { padding: 18px; }
+  .calorie-note { margin-top: 16px; }
+  .flex-grid { margin-top: 24px; gap: 22px; }
+  .plan-selector { margin-top: 18px; }
+  .plan-panel { margin-top: 26px; }
+  .callout-band { gap: 22px; padding: 24px; }
+  .summary-band { padding-top: 32px; padding-bottom: 32px; }
+  .cta-band { padding: 26px; }
+  .cta-button {
+    gap: 6px;
+    padding: 10px 20px;
+    font-size: 13px;
+    line-height: 1.35;
+  }
+  .cta-button svg { width: 28px; height: 28px; }
+  .site-footer {
+    margin-top: 34px;
+    padding-top: 8px;
+    padding-bottom: 88px;
+    gap: 0;
+    line-height: 1.25;
+  }
+}
+
+@media (min-width: 701px) {
+  section { padding-top: 48px; }
+  .benefits-grid { gap: 26px; margin-top: 26px; }
+  .science-grid { margin-top: 28px; }
+  .science-item { padding-top: 22px; padding-bottom: 22px; }
+  .science-image { margin-top: 28px; }
+  .calorie-band { padding: 32px; }
+  .flex-grid { margin-top: 26px; gap: 24px; }
+  .plan-panel { margin-top: 28px; }
+  .callout-band { gap: 24px; padding: 32px; }
+  .summary-band { padding-top: 36px; padding-bottom: 36px; }
+  .cta-band { padding: 34px; }
+}
+
+@media (min-width: 1024px) {
+  section { padding-top: 52px; }
+  .tag-cloud { gap: 7px 9px; margin-top: 18px; }
+  .tag-chip { height: 54px; padding-top: 5px; padding-bottom: 5px; }
+  .tag-icon { width: 24px; height: 24px; flex-basis: 24px; }
+  .tag-icon svg { width: 16px; height: 16px; }
+  .benefit-item { padding-top: 14px; padding-bottom: 14px; }
+  .calorie-band { padding: 30px; }
+  .callout-band { padding: 34px; }
+  .summary-band { padding-top: 32px; padding-bottom: 32px; }
+}
+
+@media (max-width: 700px) {
+  #plans { padding-top: 28px; }
+  #plans .section-title { margin-bottom: 10px; }
+  #plans .section-lede { margin-bottom: 0; }
+  #plans .plan-selector { margin-top: 14px; }
+  #plans .plan-flex-note { margin-top: 10px; }
+  #plans .plan-panel { margin-top: 18px; }
+  #plans .plan-panel-heading {
+    font-size: 22px;
+    margin-bottom: 8px;
+  }
+  #plans .day-rail { padding-top: 2px; padding-bottom: 8px; }
+  #plans .day-panel { margin-top: 14px; }
+}
+
+@media (min-width: 701px) {
+  #plans { padding-top: 44px; }
+  #plans .section-title { margin-bottom: 12px; }
+  #plans .section-lede { margin-bottom: 0; }
+  #plans .plan-selector { margin-top: 16px; }
+  #plans .plan-flex-note { margin-top: 10px; }
+  #plans .plan-panel { margin-top: 22px; }
+  #plans .plan-panel-heading {
+    font-size: 26px;
+    margin-bottom: 10px;
+  }
+  #plans .day-rail { padding-top: 2px; padding-bottom: 4px; }
+  #plans .day-panel { margin-top: 18px; }
+}

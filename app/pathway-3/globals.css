@@ -1,0 +1,853 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Yoga for Beginners - Premium Redesign Styling */
+
+:root {
+  /* Color Palette */
+  --bg-primary: #fafaf6;
+  --bg-sidebar: #f2f2eb;
+  --bg-card-neutral: #eaeae3;
+  --bg-card-blue: #f0f6fc;
+  --bg-card-green: #f2f7f3;
+  
+  --text-primary: #1e252b;
+  --text-secondary: #525d66;
+  
+  --accent-green: #238647;
+  --accent-green-light: #e8f5ec;
+  --accent-blue: #1b73e8;
+  --accent-blue-light: #eaf3fc;
+  
+  --border-color: #e2e2d9;
+  --border-color-blue: #d2e4f6;
+  --border-color-green: #d1ebd8;
+  
+  --focus-outline: #238647;
+  
+  /* Layout Spacing */
+  --section-padding: clamp(24px, 4.5vw, 64px);
+}
+
+/* Base resets */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  color: var(--text-primary);
+  background-color: var(--bg-primary);
+  scroll-behavior: smooth;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* Reduced motion compliance */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto !important;
+  }
+  
+  *, *::before, *::after {
+    animation-delay: -1ms !important;
+    animation-duration: 1ms !important;
+    animation-iteration-count: 1 !important;
+    background-attachment: initial !important;
+    scroll-behavior: auto !important;
+    transition-duration: 0s !important;
+    transition-delay: 0s !important;
+  }
+}
+
+/* Keyboard accessibility outline */
+*:focus-visible {
+  outline: 2px solid var(--focus-outline);
+  outline-offset: 4px;
+}
+
+/* Reading Progress Bar Container */
+.ReadingProgressContainer {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 48px;
+  background: rgba(250, 250, 246, 0.95);
+  border-bottom: 1px solid var(--border-color);
+  backdrop-filter: blur(8px);
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 24px;
+}
+
+.progress-label {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.progress-track {
+  flex: 1;
+  max-width: 400px;
+  height: 4px;
+  background: var(--border-color);
+  border-radius: 2px;
+  margin: 0 16px;
+  overflow: hidden;
+}
+
+.ReadingProgressBar {
+  height: 100%;
+  width: 0%;
+  background: var(--accent-green);
+  border-radius: 2px;
+  transition: width 0.1s ease-out;
+}
+
+.progress-percent {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--text-primary);
+  min-width: 35px;
+  text-align: right;
+}
+
+/* Page Layout */
+.PageContainer {
+  display: grid;
+  grid-template-columns: 280px 1fr;
+  min-height: 100vh;
+  margin-top: 48px; /* offset for progress bar */
+}
+
+/* Desktop Sidebar styling */
+.Sidebar {
+  background-color: var(--bg-sidebar);
+  border-right: 1px solid var(--border-color);
+  padding: 40px 24px;
+  position: relative;
+}
+
+.SidebarStickyContent {
+  position: sticky;
+  top: 88px; /* 48px header + 40px spacing */
+  max-height: calc(100vh - 128px);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 32px;
+}
+
+/* Back button */
+.BackButton {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: 1px solid var(--border-color);
+  background: #ffffff;
+  color: var(--text-primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: border-color 0.2s, background-color 0.2s, transform 0.1s;
+}
+
+.BackButton:hover {
+  border-color: var(--accent-green);
+  background-color: var(--accent-green-light);
+  color: var(--accent-green);
+}
+
+.BackButton:active {
+  transform: scale(0.95);
+}
+
+.DesktopNav {
+  flex-grow: 1;
+}
+
+.nav-title {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--text-primary);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: 16px;
+}
+
+.nav-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.nav-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 12px;
+  color: var(--text-secondary);
+  font-size: 14.5px;
+  font-weight: 500;
+  text-decoration: none;
+  border-radius: 6px;
+  transition: all 0.2s ease;
+}
+
+.nav-item:hover {
+  background-color: rgba(35, 134, 71, 0.04);
+  color: var(--text-primary);
+}
+
+.nav-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background-color: #b5b5ab;
+  flex-shrink: 0;
+  transition: background-color 0.2s, transform 0.2s;
+}
+
+.nav-item.active {
+  color: var(--accent-green);
+  font-weight: 700;
+  background-color: rgba(35, 134, 71, 0.08);
+}
+
+.nav-item.active .nav-dot {
+  background-color: var(--accent-green);
+  transform: scale(1.3);
+}
+
+.sub-nav-item {
+  padding-left: 28px;
+}
+
+/* Sidebar Quote block */
+.SidebarQuote {
+  border-top: 1px solid var(--border-color);
+  padding-top: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  color: var(--text-secondary);
+}
+
+.SidebarQuote .lotus-icon {
+  width: 32px;
+  height: 32px;
+  color: var(--accent-green);
+  opacity: 0.6;
+}
+
+.SidebarQuote blockquote p {
+  font-size: 13.5px;
+  font-style: italic;
+  line-height: 1.5;
+  margin-bottom: 6px;
+}
+
+.SidebarQuote blockquote cite {
+  font-size: 12px;
+  font-weight: 600;
+  font-style: normal;
+  color: var(--text-primary);
+}
+
+/* Main Content reading layout */
+.MainContent {
+  padding: 40px clamp(16px, 5vw, 64px);
+  background-color: var(--bg-primary);
+  width: 100%;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.MobileHeaderBar,
+.HeroCard,
+.MobileExploreMenu,
+.ArticleBody,
+.Footer {
+  width: 100%;
+}
+
+@media (min-width: 768px) {
+  .MobileHeaderBar,
+  .HeroCard,
+  .MobileExploreMenu,
+  .ArticleBody,
+  .Footer {
+    width: 90%;
+    max-width: 900px;
+  }
+}
+
+@media (min-width: 1025px) {
+  .MobileHeaderBar,
+  .HeroCard,
+  .MobileExploreMenu,
+  .ArticleBody,
+  .Footer {
+    width: 86%;
+    max-width: 1100px;
+  }
+}
+
+.MobileHeaderBar {
+  display: none; /* Desktop hidden */
+  width: 100%;
+  margin-bottom: 16px;
+}
+
+/* Hero Section (Introduction Card) */
+.HeroCard {
+  width: 100%;
+  background-color: #f5f5ee;
+  border: 1px solid var(--border-color);
+  border-radius: 20px;
+  padding: clamp(24px, 5vw, 44px);
+  margin-bottom: 40px;
+  display: grid;
+  grid-template-columns: 1.2fr 0.8fr;
+  gap: 32px;
+  align-items: center;
+}
+
+.HeroContent {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.HeroMainTitle {
+  font-size: clamp(32px, 4.5vw, 48px);
+  font-weight: 800;
+  line-height: 1.1;
+  color: var(--text-primary);
+  letter-spacing: -0.02em;
+}
+
+.HeroSubtitle {
+  font-size: clamp(18px, 2.5vw, 22px);
+  font-weight: 700;
+  color: var(--accent-green);
+}
+
+.HeroText p {
+  font-size: clamp(15.5px, 1.5vw, 17px);
+  line-height: 1.65;
+  color: var(--text-secondary);
+}
+
+.HeroVisual {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  max-width: 100%;
+}
+
+.HeroImage {
+  max-width: 100%;
+  height: auto;
+  object-fit: contain;
+  border-radius: 12px;
+}
+
+/* Mobile Explore Navigation */
+.MobileExploreMenu {
+  display: none; /* Desktop hidden */
+  width: 100%;
+  position: relative;
+  margin-bottom: 32px;
+}
+
+.ExploreToggle {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 20px;
+  background: #ffffff;
+  border: 1px solid var(--border-color);
+  border-radius: 10px;
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--text-primary);
+  cursor: pointer;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.02);
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.ExploreToggle:hover {
+  border-color: var(--accent-green);
+}
+
+.ExploreToggle:focus-visible {
+  outline: 2px solid var(--focus-outline);
+}
+
+.toggle-icon, .toggle-chevron {
+  display: flex;
+  align-items: center;
+  color: var(--text-secondary);
+}
+
+.toggle-chevron svg {
+  transition: transform 0.2s ease;
+}
+
+.ExploreDropdown {
+  position: absolute;
+  top: calc(100% + 8px);
+  left: 0;
+  width: 100%;
+  background: #ffffff;
+  border: 1px solid var(--border-color);
+  border-radius: 10px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+  z-index: 100;
+  overflow: hidden;
+  max-height: 350px;
+  overflow-y: auto;
+}
+
+.mobile-nav-list {
+  list-style: none;
+}
+
+.mobile-nav-item {
+  display: block;
+  padding: 14px 20px;
+  font-size: 14.5px;
+  font-weight: 500;
+  color: var(--text-secondary);
+  text-decoration: none;
+  border-bottom: 1px solid #f6f6f0;
+  transition: background-color 0.2s, color 0.2s;
+}
+
+.mobile-nav-item:last-child {
+  border-bottom: none;
+}
+
+.mobile-nav-item:hover, .mobile-nav-item.active {
+  background-color: var(--accent-green-light);
+  color: var(--accent-green);
+  font-weight: 600;
+}
+
+/* Article Body content column */
+.ArticleBody {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: var(--section-padding);
+}
+
+/* Section block spacing and anchor alignment */
+.ArticleSection {
+  scroll-margin-top: 72px; /* Account for sticky header bar */
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.SectionHeader {
+  display: flex;
+  align-items: baseline;
+  gap: 18px;
+  border-bottom: 1px solid var(--border-color);
+  padding-bottom: 12px;
+}
+
+.SectionNumber {
+  font-size: clamp(24px, 3.5vw, 32px);
+  font-weight: 800;
+  color: var(--accent-green);
+  opacity: 0.9;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  line-height: 1;
+}
+
+.SectionTitle {
+  font-size: clamp(20px, 3vw, 26px);
+  font-weight: 700;
+  color: var(--text-primary);
+  line-height: 1.25;
+}
+
+.SectionContent {
+  font-size: clamp(15.5px, 1.5vw, 17.5px);
+  line-height: 1.7;
+  color: var(--text-secondary);
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.SectionContent p {
+  max-width: 800px;
+  width: 100%;
+}
+
+.SectionContent strong {
+  color: var(--text-primary);
+  font-weight: 700;
+}
+
+/* Special treatment: 03. Subsection nested visually */
+.Subsection {
+  padding-left: clamp(16px, 4vw, 36px);
+  border-left: 2px solid var(--border-color);
+}
+
+/* Try Yoga Callout box inside section 03 */
+.TryYogaCallout {
+  margin-top: 8px;
+  background-color: #ffffff;
+  border: 1px solid var(--border-color);
+  border-left: 4px solid var(--accent-green);
+  border-radius: 8px;
+  padding: 20px 24px;
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  max-width: 800px;
+  width: 100%;
+}
+
+.CalloutQuoteMark {
+  font-size: 40px;
+  font-weight: 800;
+  color: var(--accent-green);
+  line-height: 0.7;
+  opacity: 0.3;
+  font-family: Georgia, serif;
+}
+
+.CalloutText {
+  font-size: 17px;
+  font-weight: 600;
+  font-style: italic;
+  color: var(--text-primary);
+  line-height: 1.5;
+}
+
+/* Special treatment: 05. Your First Yoga Practice (Green Card) */
+.FirstPracticeCard {
+  background-color: var(--bg-card-green);
+  border: 1px solid var(--border-color-green);
+  border-radius: 16px;
+  padding: 28px clamp(18px, 4vw, 32px);
+}
+
+.FirstPracticeCard .SectionHeader {
+  border-bottom-color: var(--border-color-green);
+}
+
+.LotusMiniIcon {
+  display: inline-flex;
+  align-items: center;
+  color: var(--accent-green);
+  flex-shrink: 0;
+}
+
+/* Section 06: How Often badges styling */
+.badge-strong {
+  background-color: var(--accent-green-light);
+  color: var(--accent-green);
+  font-weight: 600;
+  padding: 2px 6px;
+  border-radius: 4px;
+  border: 1px solid var(--border-color-green);
+  font-size: 0.95em;
+  white-space: nowrap;
+}
+
+/* Section 07: Benefits checklist Grid */
+.BenefitsGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  list-style: none;
+  margin-top: 12px;
+}
+
+.BenefitItem {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 16px;
+  background-color: #ffffff;
+  border: 1px solid var(--border-color);
+  border-radius: 10px;
+  transition: transform 0.2s, border-color 0.2s, box-shadow 0.2s;
+}
+
+.BenefitItem:hover {
+  transform: translateY(-2px);
+  border-color: var(--accent-green);
+  box-shadow: 0 4px 12px rgba(35, 134, 71, 0.05);
+}
+
+.CheckIcon {
+  color: var(--accent-green);
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 1.3;
+}
+
+.BenefitText {
+  font-size: 15px;
+  line-height: 1.45;
+  color: var(--text-secondary);
+}
+
+/* Section 08: Improvement checklist Grid */
+.ImprovementGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  list-style: none;
+  margin-top: 12px;
+}
+
+.ImproveItem {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 10px 14px;
+  background-color: rgba(255, 255, 255, 0.6);
+  border: 1px dashed var(--border-color);
+  border-radius: 8px;
+}
+
+.ImproveItem .bullet {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background-color: var(--accent-green);
+  margin-top: 8px;
+  flex-shrink: 0;
+}
+
+.ImproveText {
+  font-size: 15px;
+  line-height: 1.45;
+  color: var(--text-secondary);
+}
+
+/* Footer / Back to Top Button */
+.Footer {
+  width: 100%;
+  margin-top: 56px;
+  border-top: 1px solid var(--border-color);
+  padding-top: 24px;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.BackToTopBtn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 18px;
+  background-color: #ffffff;
+  border: 1px solid var(--border-color);
+  border-radius: 20px;
+  font-size: 13.5px;
+  font-weight: 600;
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.BackToTopBtn:hover {
+  border-color: var(--accent-green);
+  color: var(--accent-green);
+  background-color: var(--accent-green-light);
+}
+
+.BackToTopBtn:active {
+  transform: translateY(-2px);
+}
+
+/* Dynamic toast notifications styling */
+.Toast {
+  position: fixed;
+  bottom: 24px;
+  left: 50%;
+  transform: translateX(-50%) translateY(100px);
+  background: var(--text-primary);
+  color: #ffffff;
+  padding: 12px 24px;
+  border-radius: 8px;
+  font-size: 14.5px;
+  font-weight: 600;
+  z-index: 1100;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+  opacity: 0;
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.3s ease;
+  pointer-events: none;
+}
+
+.Toast.show {
+  transform: translateX(-50%) translateY(0);
+  opacity: 1;
+}
+
+/* Responsiveness adjustments (tablet & mobile viewports) */
+
+/* Laptop screen compression */
+@media (max-width: 1200px) {
+  .PageContainer {
+    grid-template-columns: 240px 1fr;
+  }
+}
+
+/* Tablet viewports: collapse sidebar navigation */
+@media (max-width: 1024px) {
+  .PageContainer {
+    grid-template-columns: 1fr;
+    margin-top: 48px;
+  }
+  
+  .Sidebar {
+    display: none;
+  }
+  
+  .MobileHeaderBar {
+    display: flex;
+    justify-content: flex-start;
+  }
+  
+  .MobileExploreMenu {
+    display: block;
+  }
+  
+  .MainContent {
+    padding: 32px 24px;
+  }
+  
+  .HeroCard {
+    grid-template-columns: 1.3fr 0.7fr;
+    padding: 32px;
+    gap: 24px;
+  }
+}
+
+/* Large mobile viewports */
+@media (max-width: 768px) {
+  .HeroCard {
+    grid-template-columns: 1fr;
+    text-align: center;
+    gap: 20px;
+  }
+  
+  .HeroVisual {
+    order: 2;
+  }
+  
+  .HeroContent {
+    order: 1;
+  }
+  
+  .HeroImage {
+    max-width: 200px;
+  }
+  
+  .Subsection {
+    padding-left: 16px;
+  }
+
+  .BenefitsGrid, .ImprovementGrid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Small mobile viewports optimization */
+@media (max-width: 480px) {
+  .MainContent {
+    padding: 24px 16px;
+  }
+  
+  .ReadingProgressContainer {
+    padding: 0 16px;
+  }
+  
+  .progress-track {
+    margin: 0 10px;
+  }
+  
+  .HeroCard {
+    padding: 24px 16px;
+    border-radius: 12px;
+  }
+  
+  .HeroImage {
+    max-width: 150px;
+  }
+  
+  .FirstPracticeCard {
+    padding: 20px 16px;
+    border-radius: 12px;
+  }
+  
+  .Subsection {
+    padding-left: 12px;
+    border-left-width: 2px;
+  }
+  
+  .TryYogaCallout {
+    padding: 16px;
+  }
+  
+  .CalloutText {
+    font-size: 15.5px;
+  }
+  
+  .BenefitsGrid {
+    grid-template-columns: 1fr;
+  }
+  
+  .ImprovementGrid {
+    grid-template-columns: 1fr;
+  }
+  
+  .Footer {
+    justify-content: center;
+  }
+}
+
+/* Very narrow devices support */
+@media (max-width: 320px) {
+  .ReadingProgressContainer {
+    font-size: 11px;
+  }
+  
+  .progress-label {
+    display: none; /* Hide text on ultra small screens to save space */
+  }
+  
+  .progress-track {
+    max-width: 100%;
+    margin-left: 0;
+  }
+}
