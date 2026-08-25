@@ -22,7 +22,7 @@ export default function MasterHubPage() {
   const filteredPathways = useMemo(() => {
     return PATHWAYS.filter((pathway) => {
       const matchesCategory =
-        selectedCategory === "all" || pathway.categoryId === selectedCategory;
+        selectedCategory === "all" || selectedCategory === "yoga";
       const matchesSearch =
         searchQuery.trim() === "" ||
         pathway.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
