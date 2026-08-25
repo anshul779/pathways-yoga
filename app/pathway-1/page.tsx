@@ -122,7 +122,7 @@ export default function Home() {
                 >
                   Pathways
                 </a>{' '}
-                and select your condition&mdash;such as <strong>depression, stress, anxiety, ADHD, OCD,</strong> or more.
+                and select your condition such as <strong>depression, stress, anxiety, ADHD, OCD,</strong> or more.
               </p>
 
               <p className="para">
