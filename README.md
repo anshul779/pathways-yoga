@@ -13,6 +13,9 @@ A Next.js web application containing 13 interactive wellbeing pathways covering 
 - Responsive navigation and controls for small screens
 - Images and supporting assets served from `public/`
 
+## Features
+Ref-Source- (https://admin.mantracare.com/pathway/25/edit)
+
 ## Pathways
 
 | Route | Program |
