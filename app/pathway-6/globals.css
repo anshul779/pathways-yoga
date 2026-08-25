@@ -123,6 +123,7 @@ p:last-child{margin-bottom:0;}
   transition:opacity .25s ease, transform .25s ease;
   pointer-events:none;
 }
+  overflow:hidden;
 #progress-pct.show{opacity:1; transform:translateY(0);}
 @media (max-width:640px){
   #progress-pct{display:none;}
@@ -327,7 +328,8 @@ p:last-child{margin-bottom:0;}
 
 @media (max-width:900px){
   .hero-grid{grid-template-columns:1fr; gap:30px;}
-  .hero-visual{aspect-ratio:16/11; order:-1;}
+  .hero-visual{aspect-ratio:16/11; order:-1; overflow:hidden;}
+  .hero-visual svg{max-width:100%; height:auto;}
   .hero-copy .lede{max-width:none;}
 }
 

@@ -335,6 +335,13 @@ h1.title{
   .tile-section{ padding-bottom:28px; }
 }
 @media (max-width:360px){
+  .level-tabs{ gap:4px; padding:4px; }
+  .level-tab{
+    min-width:0;
+    padding-inline:6px;
+  }
+  .level-tab b{ font-size:0.8rem; }
+  .level-tab span{ font-size:0.66rem; }
   .benefit-card:last-child{
     grid-column:auto;
     width:100%;

@@ -16,9 +16,9 @@ export default function PathwayHeader({ currentId }: PathwayHeaderProps) {
 
   return (
     <header className="sticky top-0 z-50 w-full bg-white/90 dark:bg-slate-900/90 backdrop-blur-md border-b border-slate-200/80 dark:border-slate-800 transition-all">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-14 flex items-center justify-between gap-4">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-14 min-w-0 flex items-center justify-between gap-4">
         {/* Left: Back to Hub Button */}
-        <div className="flex items-center gap-3">
+        <div className="flex min-w-0 flex-1 items-center gap-3">
           <Link
             href="/"
             className="group flex items-center gap-2 px-3 py-1.5 rounded-lg text-sm font-medium text-slate-700 dark:text-slate-200 hover:text-emerald-600 dark:hover:text-emerald-400 hover:bg-emerald-50 dark:hover:bg-emerald-950/40 transition-colors"
@@ -32,19 +32,19 @@ export default function PathwayHeader({ currentId }: PathwayHeaderProps) {
           <span className="h-4 w-px bg-slate-200 dark:bg-slate-700 hidden sm:block" />
 
           {/* Pathway Identity Tag */}
-          <div className="flex items-center gap-2">
+          <div className="flex min-w-0 items-center gap-2">
             <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-semibold bg-emerald-100 dark:bg-emerald-900/50 text-emerald-800 dark:text-emerald-300">
               <Sparkles className="w-3 h-3 text-emerald-600 dark:text-emerald-400" />
               Pathway {current.id}
             </span>
-            <h1 className="text-sm font-semibold text-slate-800 dark:text-slate-100 truncate max-w-[200px] md:max-w-md">
+            <h1 className="min-w-0 max-w-[120px] truncate text-sm font-semibold text-slate-800 dark:text-slate-100 sm:max-w-[200px] md:max-w-md">
               {current.title}
             </h1>
           </div>
         </div>
 
         {/* Right: Quick Previous / Next Navigation */}
-        <div className="flex items-center gap-1 sm:gap-2">
+        <div className="flex shrink-0 items-center gap-1 sm:gap-2">
           {prevPathway && (
             <Link
               href={prevPathway.route}

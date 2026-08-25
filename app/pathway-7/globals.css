@@ -593,6 +593,19 @@ section:first-of-type { padding-top: clamp(24px, 6vw, 56px); }
 }
 .day-pill:hover:not(.is-active) { border-color: var(--forest); color: var(--forest); }
 
+@media (max-width: 899px) {
+  .day-rail {
+    flex-wrap: wrap;
+    justify-content: center;
+    overflow-x: visible;
+  }
+  .day-pill {
+    flex: 1 1 calc(25% - 8px);
+    min-width: 0;
+    padding-inline: 10px;
+  }
+}
+
 /* Desktop: all seven days fit without scrolling */
 @media (min-width: 900px) {
   .day-rail-wrap::before, .day-rail-wrap::after { display: none; }

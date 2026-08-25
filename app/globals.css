@@ -59,3 +59,17 @@
   scrollbar-width: none;  /* Firefox */
 }
 
+@media (max-width: 480px) {
+  html,
+  body {
+    max-width: 100%;
+  }
+
+  /* Let nested flex and grid content shrink to the mobile viewport. */
+  *,
+  *::before,
+  *::after {
+    min-width: 0;
+  }
+}
+
