@@ -9,7 +9,8 @@ interface Session {
   desc: string;
   img: string;
   fallback: string;
-  video: string;
+  videoThumbnail: string;
+  videoSrc: string;
 }
 
 const sessions: Session[] = [
@@ -21,7 +22,8 @@ const sessions: Session[] = [
     img: "/img/pose-side-stretch.png",
     fallback:
       "https://images.unsplash.com/photo-1518611012118-696072aa579a?auto=format&fit=crop&w=500&q=80",
-    video: "https://youtu.be/KmoGSER3Nhw?si=l_2xLBLmzaQN_NIi",
+    videoThumbnail: "/images/tone-up/KmoGSER3Nhw-HD.jpg",
+    videoSrc: "/videos/tone-up/vidssave.com 20 minute Intermediate Power Yoga _ Arm Balances_ Crow & Hurdler's Pose 480P.mp4",
   },
   {
     title: "Energizing Power Flow Morning Yoga Workout",
@@ -31,7 +33,8 @@ const sessions: Session[] = [
     img: "/img/pose-warrior-flow.png",
     fallback:
       "https://images.unsplash.com/photo-1593811167562-9cef47bfc4d7?auto=format&fit=crop&w=500&q=80",
-    video: "https://youtu.be/p1UxGHu9TVE?si=bJT7DgSjSPCVNwwc",
+    videoThumbnail: "/images/tone-up/p1UxGHu9TVE-HD.jpg",
+    videoSrc: "/videos/tone-up/vidssave.com 20 minute Intermediate Power Yoga _ Arm Balances_ Crow & Hurdler's Pose 720P (1).mp4",
   },
   {
     title: "Total Body Yoga Workout",
@@ -41,7 +44,8 @@ const sessions: Session[] = [
     img: "/img/pose-upward-dog.png",
     fallback:
       "https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?auto=format&fit=crop&w=500&q=80",
-    video: "https://youtu.be/gKklMcx8w7A?si=IDaAEgzx2YRaGBXG",
+    videoThumbnail: "/images/tone-up/gKklMcx8w7A-HD (1).jpg",
+    videoSrc: "/videos/tone-up/vidssave.com 30 minute Full Body Power Yoga Workout _ Weight Loss & Toning 720P.mp4",
   },
   {
     title: "Power Yoga Workout for Warrior Strength",
@@ -51,7 +55,8 @@ const sessions: Session[] = [
     img: "/img/pose-crow.png",
     fallback:
       "https://images.unsplash.com/photo-1575052814086-f385e2e2ad1b?auto=format&fit=crop&w=500&q=80",
-    video: "https://youtu.be/p1UxGHu9TVE?si=OcMjlpeUzpDWFOCy",
+    videoThumbnail: "/images/tone-up/p1UxGHu9TVE-HD (1).jpg",
+    videoSrc: "/videos/tone-up/30 minute Full Body Power Yoga Workout _ Weight Loss & Toning.mp4",
   },
 ];
 
@@ -94,34 +99,24 @@ function playBadgeSvg() {
   );
 }
 
-function youtubeEmbedUrl(url: string): string {
-  const parsed = new URL(url);
-  const id =
-    parsed.hostname === "youtu.be"
-      ? parsed.pathname.slice(1)
-      : parsed.searchParams.get("v") ?? "";
-  return `https://www.youtube.com/embed/${id}?rel=0`;
-}
-
 export default function Home() {
   const [playerOpen, setPlayerOpen] = useState(false);
   const [activeSession, setActiveSession] = useState<Session | null>(null);
-  const [youtubeSrc, setYoutubeSrc] = useState("");
   const [toTopVisible, setToTopVisible] = useState(false);
 
   const closeBtnRef = useRef<HTMLButtonElement | null>(null);
   const lastFocusedRef = useRef<HTMLElement | null>(null);
+  const videoRef = useRef<HTMLVideoElement | null>(null);
 
   function openPlayer(session: Session) {
     lastFocusedRef.current = document.activeElement as HTMLElement | null;
     setActiveSession(session);
-    setYoutubeSrc(youtubeEmbedUrl(session.video));
     setPlayerOpen(true);
     document.body.style.overflow = "hidden";
   }
 
   function closePlayer() {
-    setYoutubeSrc("");
+    videoRef.current?.pause();
     setPlayerOpen(false);
     document.body.style.overflow = "";
     if (lastFocusedRef.current) lastFocusedRef.current.focus();
@@ -132,6 +127,16 @@ export default function Home() {
       closeBtnRef.current?.focus();
     }
   }, [playerOpen]);
+
+  useEffect(() => {
+    if (!playerOpen || !activeSession) return;
+
+    const playTimer = window.setTimeout(() => {
+      videoRef.current?.play().catch(() => undefined);
+    }, 1000);
+
+    return () => window.clearTimeout(playTimer);
+  }, [playerOpen, activeSession]);
 
   useEffect(() => {
     function onKeydown(e: KeyboardEvent) {
@@ -337,11 +342,13 @@ export default function Home() {
           </div>
 
           <div className="video-wrap">
-            <iframe
+            <video
+              ref={videoRef}
               title="Yoga session video"
-              src={youtubeSrc}
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-              allowFullScreen
+              src={activeSession?.videoSrc}
+              poster={activeSession?.videoThumbnail}
+              controls
+              playsInline
             />
           </div>
         </div>

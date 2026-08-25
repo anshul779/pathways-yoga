@@ -9,7 +9,8 @@ interface Session {
   desc: string;
   img: string;
   fallback: string;
-  video: string;
+  videoThumbnail: string;
+  videoSrc: string;
 }
 
 const sessions: Session[] = [
@@ -21,7 +22,8 @@ const sessions: Session[] = [
     img: "/img/beginner-session-nighttime.png",
     fallback:
       "https://images.unsplash.com/photo-1506126613408-eca07ce68773?auto=format&fit=crop&w=500&q=80",
-    video: "Q1e1ps9t5rQ",
+    videoThumbnail: "/video-thumbnails/Q1e1ps9t5rQ-HD.jpg",
+    videoSrc: "/videos/Yoga for Beginners _ 10 minute Beginner Yoga SLOW Stretch.mp4",
   },
   {
     title: "Yoga for Beginners Morning",
@@ -31,7 +33,8 @@ const sessions: Session[] = [
     img: "/img/beginner-session-morning.png",
     fallback:
       "https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?auto=format&fit=crop&w=500&q=80",
-    video: "CyHs9v7F9gE",
+    videoThumbnail: "/video-thumbnails/CyHs9v7F9gE-HD.jpg",
+    videoSrc: "/videos/10 minute MORNING Yoga for Beginners _ Beginner Yoga Stretch.mp4",
   },
   {
     title: "Yoga for Beginners Full Body",
@@ -41,7 +44,9 @@ const sessions: Session[] = [
     img: "/img/beginner-session-fullbody.png",
     fallback:
       "https://images.unsplash.com/photo-1518611012118-696072aa579a?auto=format&fit=crop&w=500&q=80",
-    video: "t3joHNOOyYY",
+    videoThumbnail: "/video-thumbnails/t3joHNOOyYY-HD.jpg",
+    videoSrc:
+      "/videos/vidssave.com 30 min Yin Yoga for Hormones - Yoga for Adrenal Fatigue & Thyroid Issues 720P.mp4",
   },
   {
     title: "10 minute Simple Yoga Flow for All Levels",
@@ -51,7 +56,8 @@ const sessions: Session[] = [
     img: "/img/beginner-session-simpleflow.png",
     fallback:
       "https://images.unsplash.com/photo-1575052814086-f385e2e2ad1b?auto=format&fit=crop&w=500&q=80",
-    video: "18mnOUa482Y",
+    videoThumbnail: "/video-thumbnails/18mnOUa482Y-HD.jpg",
+    videoSrc: "/videos/10 minute EASY & SIMPLE Yoga Flow for All Levels.mp4",
   },
 ];
 
@@ -119,13 +125,12 @@ export default function Home() {
 
   const closeBtnRef = useRef<HTMLButtonElement | null>(null);
   const lastFocusedRef = useRef<HTMLElement | null>(null);
+  const videoRef = useRef<HTMLVideoElement | null>(null);
 
   function openPlayer(session: Session) {
     lastFocusedRef.current = document.activeElement as HTMLElement | null;
     setActiveSession(session);
-    setVideoSrc(
-      `https://www.youtube-nocookie.com/embed/${session.video}?autoplay=1&rel=0`
-    );
+    setVideoSrc(session.videoSrc);
     setPlayerOpen(true);
     document.body.style.overflow = "hidden";
   }
@@ -142,6 +147,16 @@ export default function Home() {
       closeBtnRef.current?.focus();
     }
   }, [playerOpen]);
+
+  useEffect(() => {
+    if (!playerOpen || !activeSession) return;
+
+    const playTimer = window.setTimeout(() => {
+      videoRef.current?.play().catch(() => undefined);
+    }, 1000);
+
+    return () => window.clearTimeout(playTimer);
+  }, [playerOpen, activeSession]);
 
   useEffect(() => {
     function onKeydown(e: KeyboardEvent) {
@@ -356,11 +371,13 @@ export default function Home() {
           </div>
 
           <div className="video-wrap">
-            <iframe
+            <video
               title="Yoga session video"
               src={videoSrc}
-              allow="autoplay; encrypted-media; picture-in-picture"
-              allowFullScreen
+              poster={activeSession?.videoThumbnail}
+              ref={videoRef}
+              controls
+              playsInline
             />
           </div>
         </div>

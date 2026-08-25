@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { sessions, youtubeEmbedUrl, Session } from "./sessions-data";
+import { sessions, Session } from "./sessions-data";
 
 const HERO_IMG = "/img/66958f15-4da7-4196-b25a-e9f6ef36194d.png";
 const HERO_FALLBACK = "https://images.unsplash.com/photo-1599447421416-3414500d18a5?auto=format&fit=crop&w=1600&q=85";
@@ -26,6 +26,7 @@ export default function Home() {
   const [showToTop, setShowToTop] = useState(false);
   const lastFocusedRef = useRef<HTMLElement | null>(null);
   const closeBtnRef = useRef<HTMLButtonElement | null>(null);
+  const videoRef = useRef<HTMLVideoElement | null>(null);
 
   useEffect(() => {
     function handleScroll() {
@@ -53,6 +54,16 @@ export default function Home() {
     } else {
       document.body.style.overflow = "";
     }
+  }, [activeSession]);
+
+  useEffect(() => {
+    if (!activeSession) return;
+
+    const playTimer = window.setTimeout(() => {
+      videoRef.current?.play().catch(() => undefined);
+    }, 1000);
+
+    return () => window.clearTimeout(playTimer);
   }, [activeSession]);
 
   function openPlayer(s: Session, e: React.MouseEvent<HTMLButtonElement>) {
@@ -197,13 +208,14 @@ export default function Home() {
           </div>
 
           <div className="video-wrap">
-            <iframe
-              id="youtubeFrame"
+            <video
+              ref={videoRef}
               title="Yoga session video"
-              src={activeSession ? youtubeEmbedUrl(activeSession.video) : ""}
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-              allowFullScreen
-            ></iframe>
+              src={activeSession?.videoSrc}
+              poster={activeSession?.videoThumbnail}
+              controls
+              playsInline
+            ></video>
           </div>
         </div>
       </div>

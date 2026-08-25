@@ -71,7 +71,7 @@ export const bodyHtml = `
     </div>
 
     <div class="video-wrap">
-      <iframe id="youtubeFrame" title="Yoga session video" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+      <video id="videoPlayer" title="Yoga session video" controls playsinline></video>
     </div>
   </div>
 </div>

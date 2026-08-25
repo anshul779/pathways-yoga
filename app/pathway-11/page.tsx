@@ -7,7 +7,7 @@ export default function Page() {
   return (
     <>
       <div dangerouslySetInnerHTML={{ __html: bodyHtml }} />
-      <Script src="/js/main.js" strategy="afterInteractive" />
+      <Script src="/js/pathway-11-main.js" strategy="afterInteractive" />
     </>
   );
 }
