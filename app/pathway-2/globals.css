@@ -1,4 +1,6 @@
-@import "tailwindcss";
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
 /* ==========================================================================
    MantraCare - 16 Benefits of Yoga Redesign
