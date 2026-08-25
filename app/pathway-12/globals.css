@@ -50,7 +50,7 @@ a{color:inherit;}
 /* ===== Progress header ===== */
 .progress-header{
   position:sticky; top:56px; z-index:40;
-  background:rgba(246,242,234,0.92);
+  background:var(--bg);
   backdrop-filter: blur(8px);
   border-bottom:1px solid var(--line);
 }

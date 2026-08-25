@@ -575,7 +575,7 @@ button:focus-visible, .scrub:focus-visible{ outline: 2px solid var(--sage); outl
 
 @media (min-width: 1280px){
   .hero h1{ font-size: 64px; }
-  .sessions-grid{ grid-template-columns: repeat(4, minmax(0, 1fr)); }
+  .sessions-grid{ grid-template-columns: repeat(3, minmax(0, 1fr)); }
 }
 
 /* ---------- Large desktop / ultra-wide ---------- */
