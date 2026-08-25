@@ -510,7 +510,7 @@ body {
   .MobileBenefitNavigation {
     display: block;
     position: sticky;
-    top: 0;
+    top: 56px;
     z-index: 100;
     margin-bottom: 32px;
     background-color: var(--bg-page);

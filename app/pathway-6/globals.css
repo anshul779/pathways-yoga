@@ -132,7 +132,7 @@ p:last-child{margin-bottom:0;}
    TOP MINI NAV (site header stand-in)
 ============================ */
 .site-header{
-  position:sticky; top:4px; z-index:900;
+  position:sticky; top:56px; z-index:900;
   background:rgba(251,247,239,0.86);
   backdrop-filter:blur(10px);
   border-bottom:1px solid var(--border-soft);
@@ -170,7 +170,7 @@ p:last-child{margin-bottom:0;}
 ============================ */
 .context-nav{
   display:none;
-  position:sticky; top:4px; z-index:920;
+  position:sticky; top:56px; z-index:920;
   background:var(--card);
   border-bottom:1px solid var(--border);
   box-shadow:var(--shadow-sm);

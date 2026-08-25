@@ -375,3 +375,17 @@ body {
     max-width: 290px;
   }
 }
+
+@media (max-width: 360px) {
+  .main-heading {
+    font-size: 1.55rem;
+  }
+  .sprout-icon {
+    width: 20px;
+    height: 20px;
+  }
+  .card-container {
+    padding: 20px 16px 28px 16px;
+  }
+}
+

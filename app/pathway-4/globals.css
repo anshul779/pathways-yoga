@@ -376,7 +376,7 @@
     .mobile-nav{
       display: block;
       position: sticky;
-      top: 0;
+      top: 56px;
       z-index: 20;
       background: var(--bg);
       border-bottom: 1px solid var(--border-hairline);
@@ -460,6 +460,7 @@
   @media (max-width: 900px){
     .page{ padding: 22px 24px 72px; }
     .hero-body h1{ font-size: 32px; }
+    .mobile-nav{ margin: 0 -24px 28px; padding: 0 24px; }
   }
 
   @media (max-width: 640px){

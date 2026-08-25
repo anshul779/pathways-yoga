@@ -490,6 +490,7 @@ button:focus-visible, .scrub:focus-visible{ outline: 2px solid var(--sage); outl
     transform: translateY(6px);
   }
   .video-wrap{ aspect-ratio: auto; flex: 0 0 auto; height: 42vh; }
+  .close-btn{ width: 44px; height: 44px; }
 }
 
 /* ---------- Mobile content flow ---------- */

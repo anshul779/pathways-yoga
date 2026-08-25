@@ -449,6 +449,7 @@ button:focus-visible{ outline: 2px solid var(--sage-deep); outline-offset: 2px; 
     transform: translateY(6px);
   }
   .profile-media{ aspect-ratio: auto; height: 38vh; flex: 0 0 auto; }
+  .close-btn{ width: 44px; height: 44px; }
 }
 
 /* ---------- Mobile content flow ---------- */
