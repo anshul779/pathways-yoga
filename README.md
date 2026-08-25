@@ -1,4 +1,4 @@
-# Mantra Wellbeing Pathways
+# YOGA Pathways (Anshul)
 
 A Next.js web application containing 13 interactive wellbeing pathways covering yoga, nutrition, fitness, recovery, and personalized wellbeing planning.
 
